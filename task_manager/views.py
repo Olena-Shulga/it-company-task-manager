@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from task_manager.models import Position, TaskType, Task
 
@@ -25,3 +27,7 @@ def index(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "task_manager/index.html", context=context)
+
+
+class PositionListView(ListView):
+    model = Position
