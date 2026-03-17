@@ -31,3 +31,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class PositionListView(ListView):
     model = Position
+
+
+class PositionDetailView(DetailView):
+    model = Position
