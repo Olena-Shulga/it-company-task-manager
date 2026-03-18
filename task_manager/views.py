@@ -35,3 +35,9 @@ class PositionListView(ListView):
 
 class PositionDetailView(DetailView):
     model = Position
+
+
+class PositionCreateView(CreateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("task_manager:position-list")
