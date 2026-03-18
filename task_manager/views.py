@@ -74,3 +74,8 @@ class TaskTypeUpdateView(UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-type-list")
+
+
+class TaskTypeDeleteView(DeleteView):
+    model = TaskType
+    success_url = reverse_lazy("task_manager:task-type-list")
