@@ -54,3 +54,7 @@ class PositionDeleteView(DeleteView):
     model = Position
     success_url = reverse_lazy("task_manager:position-list")
 
+
+"""View classes for TaskType model."""
+class TaskTypeListView(ListView):
+    model = TaskType
