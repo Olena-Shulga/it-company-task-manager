@@ -1,6 +1,7 @@
 from django.urls import path
 
-from task_manager.views import index, PositionListView, PositionDetailView, PositionCreateView, PositionUpdateView
+from task_manager.views import index, PositionListView, PositionDetailView, PositionCreateView, PositionUpdateView, \
+    TaskTypeListView, PositionDeleteView
 
 urlpatterns = [
     path("", index, name="index"),
@@ -21,6 +22,12 @@ urlpatterns = [
         "positions/<int:pk>/update/",
         PositionUpdateView.as_view(),
         name="position-update"
+    ),
+
+    path(
+        "positions/<int:pk>/delete/",
+        PositionDeleteView.as_view(),
+        name="position-delete"
     ),
 
 
