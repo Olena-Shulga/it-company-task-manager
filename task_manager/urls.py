@@ -30,7 +30,11 @@ urlpatterns = [
         name="position-delete"
     ),
 
-
+    path(
+        "task_types/",
+        TaskTypeListView.as_view(),
+        name="task-type-list"
+    ),
 ]
 
 app_name = "task_manager"
