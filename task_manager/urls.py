@@ -11,6 +11,7 @@ from task_manager.views import (index,
                                 TaskTypeCreateView,
                                 TaskTypeUpdateView,
                                 TaskTypeDeleteView,
+                                TaskListView,
                                 )
 
 urlpatterns = [
@@ -64,6 +65,12 @@ urlpatterns = [
         "task_types/<int:pk>/delete/",
         TaskTypeDeleteView.as_view(),
         name="task-type-delete"
+    ),
+
+    path(
+        "tasks/",
+        TaskListView.as_view(),
+        name="task-list"
     ),
 ]
 
