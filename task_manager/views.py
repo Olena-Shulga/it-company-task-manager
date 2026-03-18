@@ -79,3 +79,8 @@ class TaskTypeUpdateView(UpdateView):
 class TaskTypeDeleteView(DeleteView):
     model = TaskType
     success_url = reverse_lazy("task_manager:task-type-list")
+
+
+"""View classes for TaskType model."""
+class TaskListView(ListView):
+    model = Task
