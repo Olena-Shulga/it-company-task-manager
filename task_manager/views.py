@@ -84,3 +84,7 @@ class TaskTypeDeleteView(DeleteView):
 """View classes for TaskType model."""
 class TaskListView(ListView):
     model = Task
+
+
+class TaskDetailView(DetailView):
+    model = Task
