@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from task_manager.forms import TaskForm
-from task_manager.models import Position, TaskType, Task
+from task_manager.models import Position, TaskType, Task, Worker
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -106,3 +106,8 @@ class TaskUpdateView(UpdateView):
 class TaskDeleteView(DeleteView):
     model = Task
     success_url = reverse_lazy("task_manager:task-list")
+
+
+"""View classes for TaskType model."""
+class WorkerListView(ListView):
+    model = Worker
