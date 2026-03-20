@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Worker List</h1>
+
+  {% if worker_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First and last name</th>
+        <th>Position</th>
+      </tr>
+
+      {% for worker in worker_list %}
+        <tr>
+          <td>
+              {{ worker.id }}
+          </td>
+          <td>
+              {{ worker.username }}
+          </td>
+          <td>
+              {{ worker.first_name }} {{ worker.last_name }}
+          </td>
+          <td>
+              {{ worker.position }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+      <p>No workers were added yet.</p>
+  {% endif %}
+{% endblock %}
