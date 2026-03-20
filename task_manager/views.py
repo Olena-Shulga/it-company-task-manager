@@ -101,3 +101,8 @@ class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
+
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    success_url = reverse_lazy("task_manager:task-list")
