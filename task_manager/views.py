@@ -128,3 +128,8 @@ class WorkerCreateView(CreateView):
     model = get_user_model()
     form_class = WorkerForm
     success_url = reverse_lazy("task_manager:worker-list")
+
+
+class WorkerDeleteView(DeleteView):
+    model = get_user_model()
+    success_url = reverse_lazy("task_manager:worker-list")
