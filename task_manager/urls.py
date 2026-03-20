@@ -13,7 +13,7 @@ from task_manager.views import (index,
                                 TaskTypeDeleteView,
                                 TaskListView,
                                 TaskDetailView, TaskCreateView, TaskUpdateView, TaskDeleteView, WorkerListView,
-                                WorkerDetailView, WorkerCreateView,
+                                WorkerDetailView, WorkerCreateView, WorkerDeleteView,
                                 )
 
 
@@ -110,6 +110,11 @@ urlpatterns = [
         "workers/create/",
         WorkerCreateView.as_view(),
         name="worker-create"
+    ),
+    path(
+        "workers/<int:pk>/delete/",
+        WorkerDeleteView.as_view(),
+        name="worker-delete"
     ),
 ]
 
