@@ -12,7 +12,7 @@ from task_manager.views import (index,
                                 TaskTypeUpdateView,
                                 TaskTypeDeleteView,
                                 TaskListView,
-                                TaskDetailView, TaskCreateView, TaskUpdateView,
+                                TaskDetailView, TaskCreateView, TaskUpdateView, TaskDeleteView,
                                 )
 
 
@@ -88,6 +88,11 @@ urlpatterns = [
         "tasks/<int:pk>/update/",
         TaskUpdateView.as_view(),
         name="task-update"
+    ),
+    path(
+        "tasks/<int:pk>/delete/",
+        TaskDeleteView.as_view(),
+        name="task-delete"
     ),
 ]
 
