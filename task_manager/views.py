@@ -110,4 +110,15 @@ class TaskDeleteView(DeleteView):
 
 """View classes for TaskType model."""
 class WorkerListView(ListView):
-    model = Worker
+    model = get_user_model()
+
+
+class WorkerDetailView(DetailView):
+    model = get_user_model()
+    queryset = get_user_model().objects.prefetch_related("tasks")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerDetailView, self).get_context_data(**kwargs)
+        context["active_tasks"] = context["worker"].tasks.filter(is_completed=False)
+        context["completed_tasks"] = context["worker"].tasks.filter(is_completed=True)
+        return context
