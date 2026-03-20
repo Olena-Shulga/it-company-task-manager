@@ -11,7 +11,8 @@ from task_manager.views import (index,
                                 TaskTypeCreateView,
                                 TaskTypeUpdateView,
                                 TaskTypeDeleteView,
-                                TaskListView, TaskDetailView,
+                                TaskListView,
+                                TaskDetailView, TaskCreateView,
                                 )
 
 
@@ -77,6 +78,11 @@ urlpatterns = [
         "tasks/<int:pk>/",
         TaskDetailView.as_view(),
         name="task-detail"
+    ),
+    path(
+        "tasks/create/",
+        TaskCreateView.as_view(),
+        name="task-create"
     ),
 ]
 
