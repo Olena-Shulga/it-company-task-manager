@@ -1,7 +1,7 @@
 from datetime import date
-
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from task_manager.models import Task, TaskType
 
@@ -26,3 +26,13 @@ class TaskForm(forms.ModelForm):
 
     def clean_deadline(self):
         return validate_deadline(self.cleaned_data["deadline"])
+
+
+class WorkerForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "position"
+        )
