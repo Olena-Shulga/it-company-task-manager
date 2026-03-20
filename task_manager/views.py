@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from task_manager.forms import TaskForm
 from task_manager.models import Position, TaskType, Task
 
 
@@ -88,3 +89,9 @@ class TaskListView(ListView):
 
 class TaskDetailView(DetailView):
     model = Task
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("task_manager:task-list")
