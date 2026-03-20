@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from task_manager.forms import TaskForm
+from task_manager.forms import TaskForm, WorkerForm
 from task_manager.models import Position, TaskType, Task, Worker
 
 
@@ -122,3 +122,9 @@ class WorkerDetailView(DetailView):
         context["active_tasks"] = context["worker"].tasks.filter(is_completed=False)
         context["completed_tasks"] = context["worker"].tasks.filter(is_completed=True)
         return context
+
+
+class WorkerCreateView(CreateView):
+    model = get_user_model()
+    form_class = WorkerForm
+    success_url = reverse_lazy("task_manager:worker-list")
