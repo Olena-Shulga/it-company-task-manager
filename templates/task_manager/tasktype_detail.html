@@ -4,4 +4,8 @@
   <h1>
     {{ tasktype.name }}
   </h1>
+  <form action="{% url 'task_manager:task-type-delete' pk=tasktype.id %}">
+    <a class="btn btn-primary" href="{% url 'task_manager:task-type-update' pk=tasktype.id %}">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 {% endblock %}
