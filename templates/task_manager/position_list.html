@@ -2,7 +2,9 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>Position List</h1>
+  <h1>Position List
+  <a style="float: inline-end" href="{% url 'task_manager:position-create' %}">+</a>
+  </h1>
 
   {% if position_list %}
     <table class="table">
@@ -14,7 +16,7 @@
       {% for position in position_list %}
         <tr>
           <td>
-              {{ position.id }}
+            <a href="{% url 'task_manager:position-detail' pk=position.id %}"> {{ position.id }}</a>
           </td>
           <td>
               {{ position.name }}

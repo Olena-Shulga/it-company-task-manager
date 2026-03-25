@@ -13,4 +13,9 @@
       <li>{{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})</li>
     {% endfor %}
   </ul>
+
+  <form action="{% url 'task_manager:position-delete' pk=position.id %}">
+    <a class="btn btn-primary" href="{% url 'task_manager:position-update' pk=position.id %}">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 {% endblock %}
