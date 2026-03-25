@@ -24,4 +24,9 @@
       <p>No assignees yet!</p>
     {% endfor %}
   </div>
+
+  <form action="{% url 'task_manager:task-delete' pk=task.id %}">
+    <a class="btn btn-primary" href="{% url 'task_manager:task-update' pk=task.id %}">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 {% endblock %}
