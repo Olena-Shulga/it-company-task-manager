@@ -41,4 +41,9 @@
       <p>No completed task!</p>
     {% endfor %}
   </div>
+
+  <form action="{% url 'task_manager:worker-delete' pk=worker.id %}">
+    <a class="btn btn-primary" href="#">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
 {% endblock %}

@@ -2,7 +2,9 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>Worker List</h1>
+  <h1>Worker List
+  <a href="{% url 'task_manager:worker-create' %}" style="float: inline-end">+</a>
+  </h1>
 
   {% if worker_list %}
     <table class="table">
@@ -16,7 +18,7 @@
       {% for worker in worker_list %}
         <tr>
           <td>
-              {{ worker.id }}
+              <a href="{% url 'task_manager:worker-detail' pk=worker.id %}">{{ worker.id }}</a>
           </td>
           <td>
               {{ worker.username }}
