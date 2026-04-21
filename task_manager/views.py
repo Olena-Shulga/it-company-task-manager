@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from task_manager.forms import (TaskForm,
@@ -14,6 +16,7 @@ from task_manager.forms import (TaskForm,
 from task_manager.models import Position, TaskType, Task
 
 
+@login_required
 def index(request: HttpRequest) -> HttpResponse:
     """View function for the home page of the site."""
 
@@ -37,6 +40,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 """View classes for Position model."""
+@method_decorator(login_required, name='dispatch')
 class PositionListView(ListView):
     model = Position
     paginate_by = 5
@@ -59,28 +63,34 @@ class PositionListView(ListView):
         return queryset
 
 
+@method_decorator(login_required, name='dispatch')
 class PositionDetailView(DetailView):
     model = Position
 
 
+@method_decorator(login_required, name='dispatch')
 class PositionCreateView(CreateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("task_manager:position-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class PositionUpdateView(UpdateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("task_manager:position-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class PositionDeleteView(DeleteView):
     model = Position
     success_url = reverse_lazy("task_manager:position-list")
 
 
+
 """View classes for TaskType model."""
+@method_decorator(login_required, name='dispatch')
 class TaskTypeListView(ListView):
     model = TaskType
     paginate_by = 5
@@ -103,28 +113,34 @@ class TaskTypeListView(ListView):
         return queryset
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskTypeDetailView(DetailView):
     model = TaskType
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskTypeCreateView(CreateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-type-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskTypeUpdateView(UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-type-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskTypeDeleteView(DeleteView):
     model = TaskType
     success_url = reverse_lazy("task_manager:task-type-list")
 
 
+
 """View classes for TaskType model."""
+@method_decorator(login_required, name='dispatch')
 class TaskListView(ListView):
     model = Task
     paginate_by = 5
@@ -151,28 +167,34 @@ class TaskListView(ListView):
         return queryset
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskDetailView(DetailView):
     model = Task
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskCreateView(CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskUpdateView(UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task_manager:task-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class TaskDeleteView(DeleteView):
     model = Task
     success_url = reverse_lazy("task_manager:task-list")
 
 
+
 """View classes for Worker model."""
+@method_decorator(login_required, name='dispatch')
 class WorkerListView(ListView):
     model = get_user_model()
     paginate_by = 5
@@ -198,6 +220,7 @@ class WorkerListView(ListView):
         return queryset
 
 
+@method_decorator(login_required, name='dispatch')
 class WorkerDetailView(DetailView):
     model = get_user_model()
     queryset = get_user_model().objects.prefetch_related("tasks")
@@ -209,17 +232,20 @@ class WorkerDetailView(DetailView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class WorkerCreateView(CreateView):
     model = get_user_model()
     form_class = WorkerForm
     success_url = reverse_lazy("task_manager:worker-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class WorkerDeleteView(DeleteView):
     model = get_user_model()
     success_url = reverse_lazy("task_manager:worker-list")
 
 
+@method_decorator(login_required, name='dispatch')
 class WorkerUpdateView(UpdateView):
     model = get_user_model()
     form_class = WorkerUpdateForm
