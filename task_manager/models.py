@@ -64,5 +64,8 @@ class Task(models.Model):
         related_name="tasks"
     )
 
+    class Meta:
+        ordering = ["is_completed", "deadline"]
+
     def __str__(self):
         return self.name
