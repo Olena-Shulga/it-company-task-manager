@@ -2,10 +2,16 @@ from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from task_manager.forms import TaskForm, WorkerForm
-from task_manager.models import Position, TaskType, Task, Worker
+from task_manager.forms import (TaskForm,
+                                WorkerForm,
+                                WorkerUpdateForm,
+                                TaskSearchForm,
+                                WorkerSearchForm,
+                                SearchForm)
+from task_manager.models import Position, TaskType, Task
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -33,6 +39,24 @@ def index(request: HttpRequest) -> HttpResponse:
 """View classes for Position model."""
 class PositionListView(ListView):
     model = Position
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PositionListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = SearchForm(
+            initial={"name": name,}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Position.objects.all()
+        form = SearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
 
 
 class PositionDetailView(DetailView):
@@ -59,6 +83,24 @@ class PositionDeleteView(DeleteView):
 """View classes for TaskType model."""
 class TaskTypeListView(ListView):
     model = TaskType
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskTypeListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = SearchForm(
+            initial={"name": name,}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = TaskType.objects.all()
+        form = SearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
 
 
 class TaskTypeDetailView(DetailView):
@@ -85,6 +127,28 @@ class TaskTypeDeleteView(DeleteView):
 """View classes for TaskType model."""
 class TaskListView(ListView):
     model = Task
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        priority = self.request.GET.get("priority", "")
+        context["search_form"] = TaskSearchForm(
+            initial={"name": name, "priority": priority}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        form = TaskSearchForm(self.request.GET)
+        if form.is_valid():
+            queryset = queryset.filter(
+                Q(name__icontains=form.cleaned_data["name"])
+                & Q(priority__icontains=form.cleaned_data["priority"])
+            )
+            if form.cleaned_data["task_type"]:
+                queryset = queryset.filter(task_type_id=form.cleaned_data["task_type"])
+        return queryset
 
 
 class TaskDetailView(DetailView):
@@ -108,9 +172,30 @@ class TaskDeleteView(DeleteView):
     success_url = reverse_lazy("task_manager:task-list")
 
 
-"""View classes for TaskType model."""
+"""View classes for Worker model."""
 class WorkerListView(ListView):
     model = get_user_model()
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("username", "")
+        priority = self.request.GET.get("position", "")
+        context["search_form"] = WorkerSearchForm(
+            initial={"username": name, "position": priority}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = get_user_model().objects.all()
+        form = WorkerSearchForm(self.request.GET)
+        if form.is_valid():
+            queryset = queryset.filter(
+                Q(username__icontains=form.cleaned_data["username"])
+            )
+            if form.cleaned_data["position"]:
+                queryset = queryset.filter(position_id=form.cleaned_data["position"])
+        return queryset
 
 
 class WorkerDetailView(DetailView):
@@ -132,4 +217,10 @@ class WorkerCreateView(CreateView):
 
 class WorkerDeleteView(DeleteView):
     model = get_user_model()
+    success_url = reverse_lazy("task_manager:worker-list")
+
+
+class WorkerUpdateView(UpdateView):
+    model = get_user_model()
+    form_class = WorkerUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
