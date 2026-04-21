@@ -1,18 +1,87 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
+
+{% block title %} Presentation {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-  <h1>Task Manager Home</h1>
-    <p>Welcome to IT Company Task Manager!</p>
-    <h2>Dynamic content</h2>
-    <p>The Task manager has the following record counts:</p>
-    <ul>
-        <li><strong>Workers:</strong> {{ num_workers }}</li>
-        <li><strong>Positions:</strong> {{ num_positions }}</li>
-        <li><strong>Task types:</strong> {{ num_task_types }}</li>
-        <li><strong>Tasks:</strong> {{ num_tasks }}</li>
-    </ul>
 
-    <p>You have visited this page
-        {{ num_visits }} time{{ num_visits|pluralize }}.
-    </p>
-{% endblock %}
+        <!-- Hero -->
+        <section class="section section bg-primary pb-6 pb-lg-6 text-white overflow-hidden z-2">
+            <div class="container z-2">
+                <div class="row justify-content-center text-center pt-6 pb-3" role="banner">
+                    <div class="col-12 col-md-8">
+                        <h1 class="display-1 font-weight-light mb-3">IT Company Task Manager</h1>
+                        <span class="text-muted font-small"> &copy; Olena Shulga</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section section-lg pb-7">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        <!-- Icon box -->
+                        <div class="icon-box text-center mb-5 mb-md-0">
+                            <a href="{% url 'task_manager:task-list' %}">
+                              <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-secondary mb-3">
+                                  <span class="fas fa-check-square"></span>
+                              </div>
+                            </a>
+                          <h2 class="my-3"><b>{{ num_tasks }}</b> Tasks</h2>
+                            <p class="px-lg-4">List of tasks sorted by deadlines, with priority tags, task types and list of assignees</p>
+
+                        </div>
+                        <!-- End of Icon box -->
+                    </div>
+                    <div class="col-12 col-md-3 mb-5 mb-md-0">
+                        <!-- Icon box -->
+                        <div class="icon-box text-center">
+                            <a href="{% url 'task_manager:worker-list' %}">
+                              <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-secondary mb-3">
+                                  <span class="fas fa-user"></span>
+                              </div>
+                            </a>
+                            <h2 class="my-3"><b>{{ num_workers }}</b> Workers</h2>
+                            <p class="px-lg-4">List of all professional and highly efficient employees of the company</p>
+                        </div>
+                        <!-- End of Icon box -->
+                    </div>
+
+                    <div class="col-12 col-md-3 mb-5 mb-md-0">
+                        <!-- Icon box -->
+                        <div class="icon-box text-center">
+                          <a href="{% url 'task_manager:position-list' %}">
+                            <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-secondary mb-3">
+                                <span class="far fa-id-badge"></span>
+                            </div>
+                          </a>
+                            <h2 class="my-3"><b>{{ num_positions }}</b> Positions</h2>
+                            <p class="px-lg-4">List of positions that are present in the structure of the company</p>
+                        </div>
+                        <!-- End of Icon box -->
+                    </div>
+                    <div class="col-12 col-md-3 mb-5 mb-md-0">
+                        <!-- Icon box -->
+                        <div class="icon-box text-center">
+                          <a href="{% url 'task_manager:task-type-list' %}">
+                            <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-secondary mb-3">
+                                <span class="fa fa-tags"></span>
+                            </div>
+                          </a>
+                            <h2 class="my-3"><b>{{ num_task_types }}</b> Task types</h2>
+                            <p class="px-lg-4">List of different types of tasks, that help to logically group assignments</p>
+                        </div>
+                        <!-- End of Icon box -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,47 +1,151 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 {% load crispy_forms_filters %}
 
-{% block content %}
-  <h1>Task List
-  <a style="float: inline-end" href="{% url 'task_manager:task-create' %}">+</a>
-  </h1>
-
-  {% if task_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Priority</th>
-        <th>Deadline</th>
-        <th>Task Type</th>
-        <th>Is Completed</th>
-      </tr>
-
-      {% for task in task_list %}
-        <tr>
-          <td>
-              <a href="{% url 'task_manager:task-detail' pk=task.id %}">{{ task.id }}</a>
-          </td>
-          <td>
-              {{ task.name }}
-          </td>
-          <td>
-              {{ task.priority }}
-          </td>
-          <td>
-              {{ task.deadline }}
-          </td>
-          <td>
-              {{ task.task_type }}
-          </td>
-          <td>
-              {{ task.is_completed }}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-  {% else %}
-      <p>No tasks were added yet.</p>
-  {% endif %}
+{% block title %}
 {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <section id="features" class="section section-lg pb-3 mt-1 z-2">
+    <div class="container">
+      <h1>
+        Tasks
+        <a href="{% url 'task_manager:task-create' %}">
+          <i class="fas fa-plus-square mr-3" data-toggle="tooltip" data-placement="top" title="Add item"></i>
+        </a>
+      </h1>
+
+
+      <form method="get" action="" class="form-inline">
+        {{ search_form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Search">
+        <div class="col-auto"> <a href="{% url 'task_manager:task-list' %}" class="btn btn-outline-secondary">Clean</a> </div>
+      </form>
+      <br>
+
+      {% if task_list %}
+        <table class="table table-hover pt-2">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Task Type</th>
+                    <th scope="col">Is Completed</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in task_list %}
+                <tr>
+                    <th scope="row">
+                        {{ task.id }}
+                    </th>
+                    <td>
+                        <a href="{% url 'task_manager:task-detail' pk=task.id %}">{{ task.name }}</a>
+                    </td>
+                    <td>
+                        {% if task.priority == "U" %}
+                          <span class="badge badge-danger">Urgent
+                        {% elif task.priority == "H" %}
+                          <span class="badge badge-warning">High
+                        {% elif task.priority == "M" %}
+                          <span class="badge badge-success">Medium
+                        {% else %}
+                          <span class="badge badge-info">Low
+                        {% endif %}
+                          </span>
+                    </td>
+                    <td>
+                        {{ task.deadline }}
+                    </td>
+                    <td>
+                        {{ task.task_type }}
+                    </td>
+                    <td>
+                        {% if task.is_completed %}
+                          <i class="fa fa-check"></i>
+                        {% else %}
+                          <i class="fa fa-minus text-light"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{% url 'task_manager:task-update' pk=task.id %}">
+                              <i class="fas fa-edit mr-3" data-toggle="tooltip" data-placement="top" title="Edit item"></i>
+                            </a>
+                            <a href="{% url 'task_manager:task-delete' pk=task.id %}">
+                              <i class="fas fa-trash text-danger mr-2" data-toggle="tooltip" data-placement="top" title="Delete item"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% else %}
+          <p>There are no tasks that match the search conditions.</p>
+      {% endif %}
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+
+
+{##}
+{##}
+{#{% extends "base.html" %}#}
+{#{% load crispy_forms_filters %}#}
+{##}
+{#{% block content %}#}
+{#  <h1>Task List#}
+{#  <a style="float: inline-end" href="{% url 'task_manager:task-create' %}">+</a>#}
+{#  </h1>#}
+{##}
+{#  {% if task_list %}#}
+{#    <table class="table">#}
+{#      <tr>#}
+{#        <th>ID</th>#}
+{#        <th>Name</th>#}
+{#        <th>Priority</th>#}
+{#        <th>Deadline</th>#}
+{#        <th>Task Type</th>#}
+{#        <th>Is Completed</th>#}
+{#      </tr>#}
+{##}
+{#      {% for task in task_list %}#}
+{#        <tr>#}
+{#          <td>#}
+{#              <a href="{% url 'task_manager:task-detail' pk=task.id %}">{{ task.id }}</a>#}
+{#          </td>#}
+{#          <td>#}
+{#              {{ task.name }}#}
+{#          </td>#}
+{#          <td>#}
+{#              {{ task.priority }}#}
+{#          </td>#}
+{#          <td>#}
+{#              {{ task.deadline }}#}
+{#          </td>#}
+{#          <td>#}
+{#              {{ task.task_type }}#}
+{#          </td>#}
+{#          <td>#}
+{#              {{ task.is_completed }}#}
+{#          </td>#}
+{#        </tr>#}
+{#      {% endfor %}#}
+{#    </table>#}
+{##}
+{#  {% else %}#}
+{#      <p>No tasks were added yet.</p>#}
+{#  {% endif %}#}
+{#{% endblock %}#}

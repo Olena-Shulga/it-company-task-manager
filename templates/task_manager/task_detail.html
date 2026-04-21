@@ -1,32 +1,37 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Task: {{ task.name }}
-  </h1>
+  <section id="features" class="section section-lg pb-7 mt-1 z-2">
+    <div class="container">
+      <h1>
+        Task: {{ task.name }}
+      </h1>
 
-  <p><strong>Description:</strong> {{ task.description }}</p>
-  <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-  <p><strong>Priority:</strong> {{ task.priority }}</p>
-  <p><strong>Task type:</strong> {{ task.task_type }}</p>
-  <p><strong>Is completed:</strong> {{ task.is_completed}}</p>
+      <p><strong>Description:</strong> {{ task.description }}</p>
+      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      <p><strong>Priority:</strong> {{ task.priority }}</p>
+      <p><strong>Task type:</strong> {{ task.task_type }}</p>
+      <p><strong>Is completed:</strong> {{ task.is_completed}}</p>
 
-  <div class="ml-3">
-    <h4>Assignees</h4>
+      <div class="ml-3">
+        <h4>Assignees</h4>
 
-    {% for assignee in task.assignees.all %}
-        <hr>
-        <p><strong>Username:</strong> {{ assignee.username }}</p>
-        <p><strong>Name:</strong> {{ assignee.first_name }} {{ assignee.last_name }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{assignee.id}}</p>
+        {% for assignee in task.assignees.all %}
+            <hr>
+            <p><strong>Username:</strong> {{ assignee.username }}</p>
+            <p><strong>Name:</strong> {{ assignee.first_name }} {{ assignee.last_name }}</p>
+            <p class="text-muted"><strong>Id:</strong> {{assignee.id}}</p>
 
-    {% empty %}
-      <p>No assignees yet!</p>
-    {% endfor %}
-  </div>
+        {% empty %}
+          <p>No assignees yet!</p>
+        {% endfor %}
+      </div>
 
-  <form action="{% url 'task_manager:task-delete' pk=task.id %}">
-    <a class="btn btn-primary" href="{% url 'task_manager:task-update' pk=task.id %}">Update</a>
-    <button type="submit" class="btn btn-danger">Delete</button>
-  </form>
+      <form action="{% url 'task_manager:task-delete' pk=task.id %}">
+        <a class="btn btn-primary" href="{% url 'task_manager:task-update' pk=task.id %}">Update</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </section>
 {% endblock %}
