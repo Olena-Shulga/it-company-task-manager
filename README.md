@@ -25,3 +25,8 @@ Page images:
 8. worker.png)
 
 
+### Test account:
+username: **admin**
+password: **1qazcde3**
+
+
