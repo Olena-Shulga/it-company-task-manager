@@ -34,9 +34,9 @@
                             <!-- Form -->
                             <div class="form-group" style="width:100%">
                                 <label for="exampleInputIcon3">Username</label>
-                                <div class="input-group mb-4" style="width:100%">
+                                <div class="input-group mb-4 w-100" style="width:100%">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><span class="fas fa-user"></span></span>
+                                        <span class="input-group-text w-100"><span class="fas fa-user"></span></span>
                                     </div>
                                     {{ form.username }}
                                 </div>
@@ -63,13 +63,6 @@
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <br />
                 </div>
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                    <br />
-                    <span class="text-muted font-small">
-                        &copy; <a target="_blank" href="https://themesberg.com/">Themesberg</a>
-                        - coded by <a target="_blank" href="https://appseed.us">AppSeed</a>.
-                    </span>
-                </div>
             </div>
         </div>
     </section>
@@ -78,30 +71,3 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
-
-{##}
-{##}
-{#{% extends "base.html" %}#}
-{#{% load crispy_forms_filters %}#}
-{##}
-{#{% block content %}#}
-{##}
-{#{% if form.errors %}#}
-{#  <p>Your username and password didn't match. Please try again.</p>#}
-{#{% endif %}#}
-{##}
-{#<h1>Login</h1>#}
-{##}
-{#{% if next %}#}
-{#  <p>Please login to see this page.</p>#}
-{#{% endif %}#}
-{##}
-{#<form method="post" action="{% url 'login' %}">#}
-{#  {% csrf_token %}#}
-{#  {{ form|crispy }}#}
-{##}
-{#  <input type="submit" value="Login" class="btn btn-primary" />#}
-{#  <input type="hidden" name="next" value="{{ next }}" />#}
-{#</form>#}
-{##}
-{#{% endblock %}#}
