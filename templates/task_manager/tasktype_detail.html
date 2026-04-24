@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <section id="features" class="section section-lg pb-7 mt-1 z-2">
+    <div class="container">
+
+  <h1>
+    Task type: <strong>{{ tasktype.name }}</strong>
+  </h1>
+
+  <form action="{% url 'task_manager:task-type-delete' pk=tasktype.id %}">
+    <a class="btn btn-primary" href="{% url 'task_manager:task-type-update' pk=tasktype.id %}">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+    </div>
+  </section>
+{% endblock %}

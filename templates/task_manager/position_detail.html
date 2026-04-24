@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <section id="features" class="section section-lg pb-7 mt-1 z-2">
+    <div class="container">
+
+  <h1>
+    Position: <strong>{{ position.name }}</strong>
+  </h1>
+  <h4>
+    List of workers on this position:
+  </h4>
+  <ul>
+    {% for worker in position.workers.all %}
+      <li><a href="{% url 'task_manager:worker-detail' pk=worker.id %}">{{ worker.username }}</a> ({{ worker.first_name }} {{ worker.last_name }})</li>
+    {% endfor %}
+  </ul>
+
+  <form action="{% url 'task_manager:position-delete' pk=position.id %}">
+    <a class="btn btn-primary" href="{% url 'task_manager:position-update' pk=position.id %}">Update</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+    </div>
+  </section>
+{% endblock %}

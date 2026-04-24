@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <section id="features" class="section section-lg pb-3 mt-1 z-2">
+    <div class="container">
+      <h1>
+        Task Types
+        <a href="{% url 'task_manager:task-type-create' %}">
+          <i class="fas fa-plus-square mr-3" data-toggle="tooltip" data-placement="top" title="Add item"></i>
+        </a>
+      </h1>
+
+      <form method="get" action="" class="form-inline">
+        {{ search_form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Search">
+        <div class="col-auto"> <a href="{% url 'task_manager:task-type-list' %}" class="btn btn-outline-secondary">Clean</a> </div>
+      </form>
+      <br>
+
+      {% if tasktype_list %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for type in tasktype_list %}
+                <tr>
+                    <th scope="row">
+                      <a href="{% url 'task_manager:task-type-detail' pk=type.id %}">{{ type.id }}</a>
+                    </th>
+                    <td>
+                        {{ type.name }}
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{% url 'task_manager:task-type-update' pk=type.id %}">
+                              <i class="fas fa-edit mr-3" data-toggle="tooltip" data-placement="top" title="Edit item"></i>
+                            </a>
+                            <a href="{% url 'task_manager:task-type-delete' pk=type.id %}">
+                              <i class="fas fa-trash text-danger mr-2" data-toggle="tooltip" data-placement="top" title="Delete item"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% else %}
+          <p>There are no task types that match the search conditions.</p>
+      {% endif %}
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

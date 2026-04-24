@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <section id="features" class="section section-lg pb-3 mt-1 z-2">
+    <div class="container">
+      <h1>
+        Workers
+        <a href="{% url 'task_manager:worker-create' %}">
+          <i class="fas fa-plus-square mr-3" data-toggle="tooltip" data-placement="top" title="Add item"></i>
+        </a>
+      </h1>
+
+      <form method="get" action="" class="form-inline">
+        {{ search_form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Search">
+        <div class="col-auto"> <a href="{% url 'task_manager:worker-list' %}" class="btn btn-outline-secondary">Clean</a> </div>
+      </form>
+      <br>
+
+      {% if worker_list %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for worker in worker_list %}
+                <tr>
+                    <th scope="row">
+                      <a href="{% url 'task_manager:worker-detail' pk=worker.id %}">{{ worker.id }}</a>
+                    </th>
+                    <td>
+                        {{ worker.username }}
+                    </td>
+                    <td>
+                        {{ worker.first_name }}
+                    </td>
+                    <td>
+                        {{ worker.last_name }}
+                    </td>
+                    <td>
+                        {{ worker.position }}
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{% url 'task_manager:worker-update' pk=worker.id %}">
+                              <i class="fas fa-edit mr-3" data-toggle="tooltip" data-placement="top" title="Edit item"></i>
+                            </a>
+                            <a href="{% url 'task_manager:worker-delete' pk=worker.id %}">
+                              <i class="fas fa-trash text-danger mr-2" data-toggle="tooltip" data-placement="top" title="Delete item"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% else %}
+          <p>There are no workers that match the search conditions.</p>
+      {% endif %}
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
